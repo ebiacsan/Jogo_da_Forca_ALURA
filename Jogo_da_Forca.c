@@ -6,8 +6,8 @@
 #include "Jogo_da_Forca_.h"
 
 //variáveis globais
-char palavra[TAM_PALAVRA]; // palavra é a palavra secreta
-char letrasTotal[26];
+char palavra[TAM_PALAVRA]; // Vai ser a palavra escolhida pelo programa
+char letrasTotal[26];      //letrasTotal[] é um vetor que guarda o alfabeto
 int tentativas = 0;
 
 void cabecalho()
@@ -16,7 +16,7 @@ void cabecalho()
     printf("*Bem vindo ao Jogo de Forca *\n");
     printf("******************************\n\n");
 }
-//letras[] é um vetor que guarda o alfabeto
+
 void captura_palpites() 
 {
 	char palpite;
@@ -38,7 +38,8 @@ int letraJaChutada(char letrachutada)
 {// não vou passar o ponteiro da variável tentativas, pois não pretendo alterar o conteúdo dela.
 	int achou = 0;
 
-	for(int j = 0; j < tentativas; j++) {
+	int j;
+	for(j = 0; j < tentativas; j++) {
 		if(letrasTotal[j] == letrachutada) {
 			achou = 1;
 			break;
@@ -48,7 +49,7 @@ int letraJaChutada(char letrachutada)
 }
 
 void desenhaForca()
-{  //printf("Já foi dados %d chutes.\n", tentativas);
+{ 
 	int erros = chutesErrados();
 	
 	//IF's ternários aqui:
@@ -126,7 +127,8 @@ void escolhePalavra()
 	srand(time(0));
 	int randomico = rand() % qtdPalavras;
 
-	for(int i = 0; i <= randomico; i++){
+	int i;
+	for(i = 0; i <= randomico; i++){
 		fscanf(f, "%s", palavra);
 	}
 
@@ -135,16 +137,19 @@ void escolhePalavra()
 
 int acertou()
 {
-	for(int i = 0; i <strlen(palavra); i++){
+	int i;
+	for(i = 0; i <strlen(palavra); i++){
 		if(!letraJaChutada(palavra[i])){
 			return (0);
 		}
 	}
 	return (1);
 }
+
 int letraExiste(char letrasTotal)
 {
-	for(int j = 0; j <strlen(palavra); j++){
+	int j;
+	for(j = 0; j <strlen(palavra); j++){
 		if (letrasTotal == palavra[j]){
 			return 1;
 		}
@@ -155,17 +160,18 @@ int letraExiste(char letrasTotal)
 int chutesErrados()
 {
 	int erros = 0;
-	for(int i = 0;  i < tentativas; i++){
+	int i;
+	for(i = 0;  i < tentativas; i++){
 		if (!letraExiste(letrasTotal[i])){
 			erros++;
 		}
 	}
-	return (erros);
+	return(erros);
 }
 
 int morreu()
 {
-	return (chutesErrados()) >= 5;
+	return(chutesErrados()) >= 5;
 }
 
 int main() {
@@ -209,7 +215,9 @@ int main() {
 		printf("──────────────────────────────────────── \n");
 		printf("────────────────█████████─────────────── \n");
 		printf("──────────────█████████████───────────── \n");
-	
+		
+		adicionaPalavra();
+		
 	}else{
 		printf("Poxa! Você perdeu!!\n");
 		printf("A palavra era %s\n", palavra);
@@ -235,10 +243,13 @@ int main() {
 		printf(" | |          || ||        \n");
 		printf(" | |          || ||        \n");
 		printf(" | |         / | | \\      \n");
-	    printf(" |'|'''''''| `-' `-' |'|   \n");
-        printf(" |'|''''''\\ \\        |'| \n");
-        printf(" | |       \\ \\       | | \n");
-    	printf(" : :        \\ \\      : : \n");
-    	printf(" . .         `'      . .   \n");		
+	    	printf(" |'|'''''''| `-' `-' |'|   \n");
+        	printf(" |'|''''''\\ \\        |'| \n");
+        	printf(" | |       \\ \\       | | \n");
+    		printf(" : :        \\ \\      : : \n");
+    		printf(" . .         `'      . .   \n");
+		printf("\n");
+		
+		adicionaPalavra();
 	}
 }
